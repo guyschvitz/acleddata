@@ -1,0 +1,20 @@
+Package: acleddata
+Type: Package
+Title: Download the Armed Conflict Location and Event Dataset (ACLED) from the new API
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Guy", "Schvitz",
+      email = "guy.schvitz@ec.europa.eu",
+      role = c("aut", "cre")
+    )
+  )
+Description: This package includes functions to download the Armed Conflict Location and Event Dataset (ACLED) through the new API, launched in August 2025. It includes a function to request an access token, get an overview of all ACLED region codes and to download ACLED data. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.1
+Imports: 
+    curl,
+    dplyr,
+    httr2
