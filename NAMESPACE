@@ -2,6 +2,7 @@
 
 export(getAcledApiToken)
 export(getAcledData)
+export(getAcledEndDate)
 export(getAcledInterCodes)
 export(getAcledRegionCodes)
 importFrom(curl,has_internet)

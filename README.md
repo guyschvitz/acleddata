@@ -28,7 +28,7 @@ token.response <- getAcledApiToken(
 access.token <- token.response$access_token
 
 # 2) Basic query: protests in France in 2023
-fr.protest.df <- getAcledData(
+fr.pr.df <- getAcledData(
   access.token = access.token,
   event.type   = "Prot",     # partial match (LIKE filter)
   country      = "France",
@@ -38,23 +38,27 @@ fr.protest.df <- getAcledData(
 
 ## Function reference
 
-### `getAcledApiToken(username, password, url = "https://acleddata.com/oauth/token")`
+### `getAcledApiToken(...)`
 
--   **Output:** list with access_token, refresh_token.
+**Output:** list with access_token, refresh_token.
 
 ### `getAcledRegionCodes()`
 
--   **Output:** Named vector of ACLED region codes (names = region names, values = numeric codes).
+**Output:** Named vector of ACLED region codes (names = region names, values = numeric codes).
 
 ### `getAcledInterCodes()`
 
--   **Output:** Named vector of ACLED interaction codes (names = interaction labels, values = numeric codes).
+**Output:** Named vector of ACLED interaction codes (names = interaction labels, values = numeric codes).
 
 ### `getAcledData(...)`
 
--   **Output:** A data.frame containing ACLED data.
+**Output:** A data.frame containing ACLED data.
 
--   **Key arguments:** filters (country, year, event.type, admin levels…), WHERE operators (\*\_where), fields, limit, export.type.
+**Key arguments:** filters (country, year, event.type, admin levels…), WHERE operators (\*\_where), fields, limit, export.type.
+
+### `getAcledEndDate()`
+
+**Output:** A Date object representing the Friday end date of the latest available ACLED dataset.
 
 ## Filter by date ranges
 
@@ -63,7 +67,7 @@ The `year` and `event_date` fields accept the following filters: `=, >, <, BETWE
 ``` r
 
 ## Get all protest events in France in 2023
-fr.protest1.df <- getAcledData(
+fr.pr1.df <- getAcledData(
   access.token = access.token,
   event.type   = "Protest",     # partial match (LIKE filter)
   country      = "France",
@@ -71,7 +75,7 @@ fr.protest1.df <- getAcledData(
 )
 
 ## Get all protest events in France only in the years 2021 and 2023
-fr.protest2.df <- getAcledData(
+fr.pr2.df <- getAcledData(
   access.token = access.token,
   event.type   = "Protest",     
   country      = "France",
@@ -79,7 +83,7 @@ fr.protest2.df <- getAcledData(
 )
 
 ## Get all protest events in France between 2021 and 2023
-fr.protest3.df <- getAcledData(
+fr.pr3.df <- getAcledData(
   access.token = access.token,
   event.type   = "Protest",     
   country      = "France",
@@ -88,13 +92,34 @@ fr.protest3.df <- getAcledData(
 )
 
 ## Get all protest events in France after January 1st 2021
-fr.protests4.df <- getAcledData(
+fr.pr4.df <- getAcledData(
   access.token = access.token,
   event.type   = "Protest",     
   country      = "France",
   event.date   = "2021-01-01",
   event.date.where   = ">"
 )
+```
+
+## Get end date of latest ACLED release
+
+ACLED releases data every Wednesday covering events up until the previous Friday. The helper function `getAcledEndDate` returns the date of previous Friday.
+
+``` r
+# Example: Get latest 24 months of ACLED data (up to last Friday)
+acled.edate <- getAcledEndDate()
+acled.sdate <- acled.edate - lubridate::period(24, unit = "months")
+period.str <- paste(acled.sdate, acled.edate, sep = "|")
+
+# Query all acled events between acled.sdate and acled.edate (last Friday)
+fr.pr5.df <- getAcledData(
+  access.token = access.token,
+  event.type   = "Protest",     
+  country      = "France",
+  event.date   =  period.str,
+  event.date.where   = "BETWEEN"
+)
+
 ```
 
 ## Filter by region codes
@@ -123,7 +148,7 @@ inter.codes.num
 # e.g., "State forces-Civilians" = 17, "Protesters only" = 60, ...
 
 # Example: state forces vs civilians in Syria
-syr.state.civ.df <- getAcledData(
+syr.st.civ.df <- getAcledData(
   access.token = access.token,
   country      = "Syria",
   interaction  = inter.codes.num[["State forces-Civilians"]],
