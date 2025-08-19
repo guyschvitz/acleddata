@@ -149,6 +149,11 @@ getAcledData <- function(access.token,
     format <- "json"
   }
 
+  # Coerce date inputs to character
+  if (inherits(event.date, "Date")) {
+    event.date <- format(event.date, "%Y-%m-%d")
+  }
+
   # Validate event.date format (single date or date range)
   if (!is.null(event.date) && !is.character(event.date)) {
     stop("`event.date` must be a character string.")
