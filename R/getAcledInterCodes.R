@@ -4,6 +4,8 @@
 #' by actor interactions. These codes represent different types of interactions between
 #' actors in conflict events, including single-actor events and dyadic interactions.
 #'
+#' @param as.vector Logical: Return result as named vector (TRUE) or as data.frame (FALSE)? Default: TRUE
+#'
 #' @return A named numeric vector of API interaction codes where names are interaction
 #'   descriptions and values are the corresponding numeric codes.
 #'
@@ -29,8 +31,8 @@
 #' }
 #'
 #' @export
-getAcledInterCodes <- function() {
-  interaction.codes <- c(
+getAcledInterCodes <- function(as.vector = TRUE) {
+  inter.codes <- c(
     "State forces only" = 10,
     "State forces-State forces" = 11,
     "State forces-Rebel group" = 12,
@@ -77,5 +79,10 @@ getAcledInterCodes <- function() {
     "External/Other forces-External/Other forces" = 88
   )
 
-  return(interaction.codes)
+  if(!as.vector){
+    inter.codes <- data.frame("inter_name" = names(inter.codes),
+                              "inter_code" = unname(inter.codes))
+  }
+
+  return(inter.codes)
 }

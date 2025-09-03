@@ -3,6 +3,8 @@
 #' Retrieve all available ACLED region codes that can be used to filter API queries by region.
 #' These codes correspond to different geographic regions in the ACLED database.
 #'
+#' @param as.vector Logical: Return result as named vector (TRUE) or as data.frame (FALSE)? Default: TRUE
+#'
 #' @return A named numeric vector of API region codes where names are region names
 #'   and values are the corresponding numeric codes.
 #'
@@ -20,7 +22,7 @@
 #' }
 #'
 #' @export
-getAcledRegionCodes <- function() {
+getAcledRegionCodes <- function(as.vector = TRUE){
   region.codes <- c(
     "Western Africa" = 1,
     "Middle Africa" = 2,
@@ -40,6 +42,11 @@ getAcledRegionCodes <- function() {
     "Oceania" = 19,
     "Antarctica" = 20
   )
+
+  if(!as.vector){
+    region.codes <- data.frame("region_name" = names(region.codes),
+                               "region_code" = unname(region.codes))
+  }
 
   return(region.codes)
 }

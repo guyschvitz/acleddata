@@ -4,7 +4,10 @@
 \alias{getAcledInterCodes}
 \title{Get ACLED API Interaction Codes}
 \usage{
-getAcledInterCodes()
+getAcledInterCodes(as.vector = TRUE)
+}
+\arguments{
+\item{as.vector}{Logical: Return result as named vector (TRUE) or as data.frame (FALSE)? Default: TRUE}
 }
 \value{
 A named numeric vector of API interaction codes where names are interaction
