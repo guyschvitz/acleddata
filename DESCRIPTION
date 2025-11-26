@@ -1,7 +1,7 @@
 Package: acleddata
 Type: Package
 Title: Download the Armed Conflict Location and Event Dataset (ACLED) from the new API
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person(
       "Guy", "Schvitz",

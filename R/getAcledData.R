@@ -222,9 +222,6 @@ getAcledData <- function(access.token,
   if (!is.null(population) && !population %in% c("TRUE", "full")) {
     stop("`population` must be 'TRUE' or 'full'.")
   }
-  if (!curl::has_internet()) {
-    stop("No internet connection detected.")
-  }
 
   # ---- Setup API call ----
   base.url <- "https://acleddata.com/api/acled/read"

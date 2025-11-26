@@ -33,9 +33,6 @@ getAcledApiToken <- function(username, password, url = "https://acleddata.com/oa
   if (is.null(password) || !nzchar(password)) {
     stop("`password` must be a non-empty character string.")
   }
-  if (!curl::has_internet()) {
-    stop("No internet connection detected.")
-  }
 
   # Prepare request body
   body.list <- list(
